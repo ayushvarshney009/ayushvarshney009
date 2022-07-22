@@ -1,0 +1,106 @@
+import java.util.*;
+ 
+class GFG
+{
+ 
+// Function to return the
+// Arraylist which stores
+// the step sequence
+static ArrayList<Integer> findSteps(int n)
+{
+    // Steps sequence
+    ArrayList<Integer> ans = new ArrayList<Integer>();
+ 
+    // Current sum
+    int sum = 0;
+ 
+    // Sign of the number
+    int sign = (n >= 0 ? 1 : -1);
+    n = Math.abs(n);
+ 
+    int i;
+    // Basic steps required to
+    // get sum >= required value.
+    for (i = 1; sum < n; i++)
+    {
+        ans.add(sign * i);
+        sum += i;
+    }
+    System.out.println( i );
+ 
+    // Reached ahead of N
+    if (sum > sign * n)
+    {
+ 
+        // If the last step
+        // was an odd number
+        if (i % 2 != 0)
+        {
+            sum -= n;
+ 
+            // sum-n is odd
+            if (sum % 2 != 0)
+            {
+                ans.add(sign * i);
+                sum += i++;
+            }
+             
+            // subtract the
+            // equivalent sum-n
+            ans.set((sum / 2) - 1,
+            ans.get((sum / 2) - 1) * -1);
+        }
+        else
+        {
+            sum -= n;
+ 
+            // sum-n is odd
+            if (sum % 2 != 0)
+            {
+ 
+                // since addition of next
+                // step and subtraction at
+                // the next step will
+                // give sum = sum-1
+                sum--;
+                ans.add(sign * i);
+                ans.add(sign * -1 * (i + 1));
+            }
+             
+            // subtract the
+            // equivalent sum-n
+            ans.set((sum / 2) - 1,
+            ans.get((sum / 2) - 1) * -1);
+        }
+    }
+     
+    // returns the Arraylist
+    return ans;
+}
+ 
+// Function to print the steps
+static void printSteps(int n)
+{
+    ArrayList<Integer> v = findSteps(n);
+ 
+    // prints the number of steps
+    // which is the size of Arraylist
+    System.out.println("Minimum number " +
+                            "of Steps: " +
+                                v.size());
+ 
+    System.out.print("Step sequence:");
+ 
+    // prints the steps stored
+    // in the Arraylist
+    for (int i = 0; i < v.size(); i++)
+        System.out.print(v.get(i) + " ");
+}
+ 
+// Driver Code
+public static void main(String args[])
+{
+    int n = 20;
+    printSteps(n);
+}
+}
